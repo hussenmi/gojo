@@ -1,0 +1,72 @@
+'use client';
+
+import Link from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
+import { signOut } from '@/lib/auth';
+import { Logo } from '@/components/ui/Logo';
+
+export function AdminNav() {
+  const pathname = usePathname();
+  const router = useRouter();
+
+  const handleSignOut = async () => {
+    await signOut();
+    router.push('/admin/login');
+  };
+
+  const navItems = [
+    { href: '/admin', label: 'Dashboard', icon: '📊' },
+    { href: '/admin/properties', label: 'Properties', icon: '🏠' },
+    { href: '/admin/properties/new', label: 'Add Property', icon: '➕' },
+  ];
+
+  return (
+    <nav className="bg-white shadow-sm border-b border-gray-200">
+      <div className="container mx-auto px-4">
+        <div className="flex items-center justify-between h-16">
+          {/* Logo */}
+          <Link href="/admin" className="flex items-center space-x-3">
+            <Logo width={120} height={40} />
+            <span className="text-sm font-medium text-gray-500 hidden md:inline">
+              Admin
+            </span>
+          </Link>
+
+          {/* Navigation */}
+          <div className="flex items-center space-x-1">
+            {navItems.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition ${
+                  pathname === item.href
+                    ? 'bg-blue-50 text-blue-700'
+                    : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                }`}
+              >
+                <span className="mr-2">{item.icon}</span>
+                <span className="hidden sm:inline">{item.label}</span>
+              </Link>
+            ))}
+          </div>
+
+          {/* User Menu */}
+          <div className="flex items-center space-x-4">
+            <Link
+              href="/"
+              className="text-sm text-gray-600 hover:text-gray-900 hidden sm:inline"
+            >
+              View Site
+            </Link>
+            <button
+              onClick={handleSignOut}
+              className="text-sm text-red-600 hover:text-red-800 font-medium"
+            >
+              Sign Out
+            </button>
+          </div>
+        </div>
+      </div>
+    </nav>
+  );
+}
