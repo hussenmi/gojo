@@ -12,6 +12,8 @@ export default function AdminDashboard() {
     active: 0,
     sold: 0,
     rented: 0,
+    inquiries: 0,
+    viewings: 0,
   });
   const [loading, setLoading] = useState(true);
 
@@ -40,11 +42,21 @@ export default function AdminDashboard() {
         .select('*', { count: 'exact', head: true })
         .eq('status', 'rented');
 
+      const { count: inquiries } = await supabase
+        .from('contact_inquiries')
+        .select('*', { count: 'exact', head: true });
+
+      const { count: viewings } = await supabase
+        .from('viewing_schedules')
+        .select('*', { count: 'exact', head: true });
+
       setStats({
         total: total || 0,
         active: active || 0,
         sold: sold || 0,
         rented: rented || 0,
+        inquiries: inquiries || 0,
+        viewings: viewings || 0,
       });
     } catch (error) {
       console.error('Error fetching stats:', error);
@@ -70,7 +82,7 @@ export default function AdminDashboard() {
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
               <div className="bg-white rounded-lg shadow p-6">
                 <div className="flex items-center justify-between">
                   <div>
@@ -94,8 +106,28 @@ export default function AdminDashboard() {
               <div className="bg-white rounded-lg shadow p-6">
                 <div className="flex items-center justify-between">
                   <div>
+                    <p className="text-sm font-medium text-gray-600">Contact Inquiries</p>
+                    <p className="text-3xl font-bold text-blue-600 mt-2">{stats.inquiries}</p>
+                  </div>
+                  <div className="text-4xl">📧</div>
+                </div>
+              </div>
+
+              <div className="bg-white rounded-lg shadow p-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm font-medium text-gray-600">Viewing Schedules</p>
+                    <p className="text-3xl font-bold text-purple-600 mt-2">{stats.viewings}</p>
+                  </div>
+                  <div className="text-4xl">📅</div>
+                </div>
+              </div>
+
+              <div className="bg-white rounded-lg shadow p-6">
+                <div className="flex items-center justify-between">
+                  <div>
                     <p className="text-sm font-medium text-gray-600">Sold</p>
-                    <p className="text-3xl font-bold text-blue-600 mt-2">{stats.sold}</p>
+                    <p className="text-3xl font-bold text-orange-600 mt-2">{stats.sold}</p>
                   </div>
                   <div className="text-4xl">💰</div>
                 </div>
@@ -105,7 +137,7 @@ export default function AdminDashboard() {
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-sm font-medium text-gray-600">Rented</p>
-                    <p className="text-3xl font-bold text-purple-600 mt-2">{stats.rented}</p>
+                    <p className="text-3xl font-bold text-teal-600 mt-2">{stats.rented}</p>
                   </div>
                   <div className="text-4xl">🔑</div>
                 </div>
@@ -116,7 +148,7 @@ export default function AdminDashboard() {
           {/* Quick Actions */}
           <div className="bg-white rounded-lg shadow p-6">
             <h2 className="text-xl font-bold text-gray-900 mb-4">Quick Actions</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               <Link
                 href="/admin/properties/new"
                 className="flex items-center p-4 border-2 border-dashed border-gray-300 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition group"
@@ -140,6 +172,58 @@ export default function AdminDashboard() {
                     Manage Properties
                   </div>
                   <div className="text-sm text-gray-600">Edit or delete listings</div>
+                </div>
+              </Link>
+
+              <Link
+                href="/admin/inquiries"
+                className="flex items-center p-4 border-2 border-dashed border-gray-300 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition group"
+              >
+                <div className="text-3xl mr-4">📧</div>
+                <div>
+                  <div className="font-semibold text-gray-900 group-hover:text-blue-600">
+                    Contact Inquiries
+                  </div>
+                  <div className="text-sm text-gray-600">View contact requests</div>
+                </div>
+              </Link>
+
+              <Link
+                href="/admin/viewings"
+                className="flex items-center p-4 border-2 border-dashed border-gray-300 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition group"
+              >
+                <div className="text-3xl mr-4">📅</div>
+                <div>
+                  <div className="font-semibold text-gray-900 group-hover:text-blue-600">
+                    Viewing Schedules
+                  </div>
+                  <div className="text-sm text-gray-600">Manage appointments</div>
+                </div>
+              </Link>
+
+              <Link
+                href="/admin/analytics"
+                className="flex items-center p-4 border-2 border-dashed border-gray-300 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition group"
+              >
+                <div className="text-3xl mr-4">📊</div>
+                <div>
+                  <div className="font-semibold text-gray-900 group-hover:text-blue-600">
+                    Property Analytics
+                  </div>
+                  <div className="text-sm text-gray-600">Views, inquiries & more</div>
+                </div>
+              </Link>
+
+              <Link
+                href="/admin/users"
+                className="flex items-center p-4 border-2 border-dashed border-gray-300 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition group"
+              >
+                <div className="text-3xl mr-4">👥</div>
+                <div>
+                  <div className="font-semibold text-gray-900 group-hover:text-blue-600">
+                    User Management
+                  </div>
+                  <div className="text-sm text-gray-600">Manage subscriptions</div>
                 </div>
               </Link>
 

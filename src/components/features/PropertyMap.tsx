@@ -1,10 +1,27 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
+import MarkerClusterGroup from 'react-leaflet-cluster';
 import L from 'leaflet';
 import Link from 'next/link';
 import { Property } from '@/types/property';
+
+// Component to adjust map view based on markers
+function MapViewAdjuster({ properties }: { properties: Property[] }) {
+  const map = useMap();
+
+  useEffect(() => {
+    if (properties.length > 0) {
+      const bounds = L.latLngBounds(
+        properties.map(p => [p.latitude!, p.longitude!] as [number, number])
+      );
+      map.fitBounds(bounds, { padding: [50, 50], maxZoom: 15 });
+    }
+  }, [properties, map]);
+
+  return null;
+}
 
 interface PropertyMapProps {
   properties: Property[];
@@ -77,13 +94,21 @@ export function PropertyMap({ properties }: PropertyMapProps) {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        {propertiesWithCoords.map((property) => (
-          <Marker
-            key={property.id}
-            position={[property.latitude!, property.longitude!]}
-            icon={customIcon}
-          >
-            <Popup maxWidth={280} className="property-popup">
+        {/* Auto-adjust map view to show all filtered properties */}
+        <MapViewAdjuster properties={propertiesWithCoords} />
+        <MarkerClusterGroup
+          chunkedLoading
+          showCoverageOnHover={false}
+          spiderfyOnMaxZoom={true}
+          maxClusterRadius={50}
+        >
+          {propertiesWithCoords.map((property) => (
+            <Marker
+              key={property.id}
+              position={[property.latitude!, property.longitude!]}
+              icon={customIcon}
+            >
+              <Popup maxWidth={280} className="property-popup">
               <div className="min-w-[260px]">
                 {/* Property Image */}
                 {property.images && property.images[0] && (
@@ -142,9 +167,10 @@ export function PropertyMap({ properties }: PropertyMapProps) {
                   View Details →
                 </Link>
               </div>
-            </Popup>
-          </Marker>
-        ))}
+              </Popup>
+            </Marker>
+          ))}
+        </MarkerClusterGroup>
       </MapContainer>
     </div>
   );

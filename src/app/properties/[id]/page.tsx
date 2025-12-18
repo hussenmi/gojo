@@ -10,6 +10,7 @@ import { supabase } from '@/lib/supabase';
 import { demoProperties } from '@/lib/demo-data';
 import { ContactForm } from '@/components/features/ContactForm';
 import { ScheduleViewing } from '@/components/features/ScheduleViewing';
+import { PropertyDetailSkeleton } from '@/components/ui/Skeletons';
 
 // Dynamically import PropertyLocationMap with no SSR
 const PropertyLocationMap = dynamic(
@@ -35,15 +36,51 @@ export default function PropertyDetailPage() {
   const [selectedImage, setSelectedImage] = useState(0);
   const [isContactFormOpen, setIsContactFormOpen] = useState(false);
   const [isScheduleViewingOpen, setIsScheduleViewingOpen] = useState(false);
+  const [isOwner, setIsOwner] = useState(false);
+  const [userTier, setUserTier] = useState<'free' | 'premium' | 'admin' | null>(null);
 
   useEffect(() => {
     if (params.id) {
       fetchProperty(params.id as string);
+      trackPropertyView(params.id as string);
     }
   }, [params.id]);
 
+  const trackPropertyView = async (propertyId: string) => {
+    try {
+      // Track view - don't track demo properties
+      if (!propertyId.startsWith('demo-')) {
+        await supabase.from('property_views').insert([
+          {
+            property_id: propertyId,
+            session_id: typeof window !== 'undefined' ? window.sessionStorage.getItem('session_id') || generateSessionId() : null,
+            user_agent: typeof navigator !== 'undefined' ? navigator.userAgent : null,
+          },
+        ]);
+      }
+    } catch (error) {
+      // Silently fail - analytics shouldn't break the app
+      console.debug('Analytics tracking failed:', error);
+    }
+  };
+
+  const generateSessionId = () => {
+    if (typeof window !== 'undefined') {
+      let sessionId = window.sessionStorage.getItem('session_id');
+      if (!sessionId) {
+        sessionId = `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+        window.sessionStorage.setItem('session_id', sessionId);
+      }
+      return sessionId;
+    }
+    return null;
+  };
+
   const fetchProperty = async (id: string) => {
     try {
+      // Get current user
+      const { data: { user } } = await supabase.auth.getUser();
+
       // Check if it's a demo property
       if (id.startsWith('demo-')) {
         const index = parseInt(id.replace('demo-', '')) - 1;
@@ -65,6 +102,22 @@ export default function PropertyDetailPage() {
 
         if (error) throw error;
         setProperty(data as Property);
+
+        // Check if current user is the owner
+        if (user && data.owner_id === user.id) {
+          setIsOwner(true);
+
+          // Get user tier
+          const { data: profile } = await supabase
+            .from('user_profiles')
+            .select('subscription_tier')
+            .eq('id', user.id)
+            .single();
+
+          if (profile) {
+            setUserTier(profile.subscription_tier);
+          }
+        }
       }
     } catch (error) {
       console.info('Using demo data for property details');
@@ -87,14 +140,7 @@ export default function PropertyDetailPage() {
   };
 
   if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading property details...</p>
-        </div>
-      </div>
-    );
+    return <PropertyDetailSkeleton />;
   }
 
   if (!property) {
@@ -246,7 +292,7 @@ export default function PropertyDetailPage() {
 
               {property.description_am && (
                 <>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2 mt-6">መግለጫ (Amharic)</h3>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2 mt-6">መግለጫ</h3>
                   <p className="text-gray-700 leading-relaxed">{property.description_am}</p>
                 </>
               )}
@@ -292,27 +338,69 @@ export default function PropertyDetailPage() {
                 </div>
               </div>
 
-              {/* Contact Buttons */}
-              <div className="space-y-3">
-                <button
-                  onClick={() => setIsContactFormOpen(true)}
-                  className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition"
-                >
-                  Contact Agent
-                </button>
-                <button
-                  onClick={() => setIsScheduleViewingOpen(true)}
-                  className="w-full border-2 border-blue-600 text-blue-600 py-3 rounded-lg font-semibold hover:bg-blue-50 transition"
-                >
-                  Schedule Viewing
-                </button>
-                <button className="w-full border-2 border-gray-300 text-gray-700 py-3 rounded-lg font-semibold hover:bg-gray-50 transition flex items-center justify-center">
-                  <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                  </svg>
-                  Save Property
-                </button>
-              </div>
+              {/* Owner Actions or Contact Buttons */}
+              {isOwner ? (
+                <div className="space-y-3">
+                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 mb-4">
+                    <p className="text-sm text-blue-800 font-medium flex items-center gap-2">
+                      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+                      </svg>
+                      You own this property
+                    </p>
+                  </div>
+                  <Link
+                    href={`/my-properties/${property.id}/edit`}
+                    className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition flex items-center justify-center gap-2"
+                  >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                    </svg>
+                    Edit Property
+                  </Link>
+                  {(userTier === 'premium' || userTier === 'admin') && (
+                    <Link
+                      href={`/my-properties/analytics?property=${property.id}`}
+                      className="w-full border-2 border-purple-600 text-purple-600 py-3 rounded-lg font-semibold hover:bg-purple-50 transition flex items-center justify-center gap-2"
+                    >
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                      </svg>
+                      View Analytics
+                    </Link>
+                  )}
+                  <Link
+                    href="/my-properties"
+                    className="w-full border-2 border-gray-300 text-gray-700 py-3 rounded-lg font-semibold hover:bg-gray-50 transition flex items-center justify-center gap-2"
+                  >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                    My Properties
+                  </Link>
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  <button
+                    onClick={() => setIsContactFormOpen(true)}
+                    className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition"
+                  >
+                    Contact Agent
+                  </button>
+                  <button
+                    onClick={() => setIsScheduleViewingOpen(true)}
+                    className="w-full border-2 border-blue-600 text-blue-600 py-3 rounded-lg font-semibold hover:bg-blue-50 transition"
+                  >
+                    Schedule Viewing
+                  </button>
+                  <button className="w-full border-2 border-gray-300 text-gray-700 py-3 rounded-lg font-semibold hover:bg-gray-50 transition flex items-center justify-center">
+                    <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                    </svg>
+                    Save Property
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         </div>

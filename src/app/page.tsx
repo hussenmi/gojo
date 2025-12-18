@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { FeaturedProperties } from '@/components/features/FeaturedProperties';
 
 export default function Home() {
   return (
@@ -21,7 +22,7 @@ export default function Home() {
                 Browse Properties
               </Link>
               <Link
-                href="/list"
+                href="/admin/properties/new"
                 className="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition"
               >
                 List Your Property
@@ -30,6 +31,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Featured Properties Carousel */}
+      <FeaturedProperties />
 
       {/* Features Section */}
       <section className="py-16 bg-gray-50">

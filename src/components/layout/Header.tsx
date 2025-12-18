@@ -85,6 +85,13 @@ export function Header() {
                       >
                         My Favorites
                       </Link>
+                      <Link
+                        href="/my-properties"
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                        onClick={() => setShowUserMenu(false)}
+                      >
+                        My Properties
+                      </Link>
                       <button
                         onClick={handleSignOut}
                         className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-50"

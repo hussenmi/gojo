@@ -6,6 +6,7 @@ import { PropertyCard } from '@/components/features/PropertyCard';
 import { Property, PropertyType, ListingType } from '@/types/property';
 import { supabase } from '@/lib/supabase';
 import { demoProperties } from '@/lib/demo-data';
+import { PropertyCardSkeleton } from '@/components/ui/Skeletons';
 
 // Dynamically import PropertyMap with no SSR to avoid window undefined errors
 const PropertyMap = dynamic(
@@ -33,8 +34,15 @@ export default function PropertiesPage() {
   const [priceRange, setPriceRange] = useState({ min: '', max: '' });
   const [bedroomsFilter, setBedroomsFilter] = useState<string>('all');
   const [bathroomsFilter, setBathroomsFilter] = useState<string>('all');
+  const [cityFilter, setCityFilter] = useState<string>('all');
+  const [showFeaturedOnly, setShowFeaturedOnly] = useState(false);
   const [sortBy, setSortBy] = useState<string>('newest');
   const [viewMode, setViewMode] = useState<'grid' | 'map'>('grid');
+  const [currentPage, setCurrentPage] = useState(1);
+  const propertiesPerPage = 12;
+
+  // Get unique cities from properties
+  const uniqueCities = Array.from(new Set(properties.map(p => p.city))).sort();
 
   useEffect(() => {
     fetchProperties();
@@ -90,6 +98,8 @@ export default function PropertiesPage() {
         searchTerm === '' ||
         property.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
         property.city.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        property.region.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        property.address.toLowerCase().includes(searchTerm.toLowerCase()) ||
         property.description.toLowerCase().includes(searchTerm.toLowerCase());
 
       const matchesPropertyType =
@@ -112,10 +122,22 @@ export default function PropertiesPage() {
         (bathroomsFilter === '4+' && (property.bathrooms || 0) >= 4) ||
         property.bathrooms === parseInt(bathroomsFilter);
 
+      const matchesCity =
+        cityFilter === 'all' || property.city === cityFilter;
+
+      const matchesFeatured =
+        !showFeaturedOnly || property.featured === true;
+
       return matchesSearch && matchesPropertyType && matchesListingType &&
-             matchesPrice && matchesBedrooms && matchesBathrooms;
+             matchesPrice && matchesBedrooms && matchesBathrooms &&
+             matchesCity && matchesFeatured;
     })
     .sort((a, b) => {
+      // ALWAYS prioritize featured properties first
+      if (a.featured && !b.featured) return -1;
+      if (!a.featured && b.featured) return 1;
+
+      // Then apply the selected sort
       switch (sortBy) {
         case 'price-low':
           return a.price - b.price;
@@ -129,12 +151,48 @@ export default function PropertiesPage() {
       }
     });
 
+  // Pagination calculations
+  const totalProperties = filteredAndSortedProperties.length;
+  const totalPages = Math.ceil(totalProperties / propertiesPerPage);
+  const indexOfLastProperty = currentPage * propertiesPerPage;
+  const indexOfFirstProperty = indexOfLastProperty - propertiesPerPage;
+  const currentProperties = filteredAndSortedProperties.slice(indexOfFirstProperty, indexOfLastProperty);
+
+  // Reset to page 1 when filters change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm, propertyTypeFilter, listingTypeFilter, bedroomsFilter, bathroomsFilter, cityFilter, showFeaturedOnly, priceRange, sortBy]);
+
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading properties...</p>
+      <div className="min-h-screen bg-gray-50">
+        <div className="container mx-auto px-4 py-8">
+          {/* Header Skeleton */}
+          <div className="mb-8 animate-pulse">
+            <div className="h-10 bg-gray-200 rounded w-64 mb-2"></div>
+            <div className="h-6 bg-gray-200 rounded w-96"></div>
+          </div>
+
+          {/* Filters Skeleton */}
+          <div className="bg-white p-6 rounded-lg shadow-sm mb-8 animate-pulse">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
+              <div className="md:col-span-2">
+                <div className="h-4 bg-gray-200 rounded w-20 mb-2"></div>
+                <div className="h-10 bg-gray-200 rounded w-full"></div>
+              </div>
+              <div className="md:col-span-2">
+                <div className="h-4 bg-gray-200 rounded w-20 mb-2"></div>
+                <div className="h-10 bg-gray-200 rounded w-full"></div>
+              </div>
+            </div>
+          </div>
+
+          {/* Property Cards Skeleton */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[...Array(6)].map((_, index) => (
+              <PropertyCardSkeleton key={index} />
+            ))}
+          </div>
         </div>
       </div>
     );
@@ -199,13 +257,30 @@ export default function PropertiesPage() {
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Search
                 </label>
-                <input
-                  type="text"
-                  placeholder="Search by title, city, or description..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 placeholder:text-gray-500"
-                />
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                  </div>
+                  <input
+                    type="text"
+                    placeholder="Search by location, title, or description..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 placeholder:text-gray-500"
+                  />
+                  {searchTerm && (
+                    <button
+                      onClick={() => setSearchTerm('')}
+                      className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
+                    >
+                      <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                    </button>
+                  )}
+                </div>
               </div>
 
               {/* Sort By */}
@@ -327,12 +402,48 @@ export default function PropertiesPage() {
                 />
               </div>
             </div>
+
+            {/* Row 3: Additional Filters */}
+            <div className="grid grid-cols-1 md:grid-cols-6 gap-4">
+              {/* City Filter */}
+              <div className="md:col-span-2">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  City
+                </label>
+                <select
+                  value={cityFilter}
+                  onChange={(e) => setCityFilter(e.target.value)}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
+                >
+                  <option value="all">All Cities</option>
+                  {uniqueCities.map((city) => (
+                    <option key={city} value={city}>{city}</option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Featured Toggle */}
+              <div className="md:col-span-2 flex items-end">
+                <label className="flex items-center gap-2 cursor-pointer bg-gray-50 px-4 py-2 rounded-lg border border-gray-300 hover:bg-gray-100 transition">
+                  <input
+                    type="checkbox"
+                    checked={showFeaturedOnly}
+                    onChange={(e) => setShowFeaturedOnly(e.target.checked)}
+                    className="w-4 h-4 text-blue-600 rounded focus:ring-2 focus:ring-blue-500"
+                  />
+                  <span className="text-sm font-medium text-gray-700">Featured Only</span>
+                  <svg className="w-4 h-4 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                </label>
+              </div>
+            </div>
           </div>
 
           {/* Active Filters Summary */}
           {(searchTerm || propertyTypeFilter !== 'all' || listingTypeFilter !== 'all' ||
-            bedroomsFilter !== 'all' || bathroomsFilter !== 'all' || sortBy !== 'newest' ||
-            priceRange.min !== '' || priceRange.max !== '') && (
+            bedroomsFilter !== 'all' || bathroomsFilter !== 'all' || cityFilter !== 'all' ||
+            showFeaturedOnly || sortBy !== 'newest' || priceRange.min !== '' || priceRange.max !== '') && (
             <div className="mt-4 pt-4 border-t border-gray-200">
               <div className="flex items-center gap-2 flex-wrap">
                 <span className="text-sm text-gray-600">Active filters:</span>
@@ -361,6 +472,19 @@ export default function PropertiesPage() {
                     Bathrooms: {bathroomsFilter}
                   </span>
                 )}
+                {cityFilter !== 'all' && (
+                  <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">
+                    City: {cityFilter}
+                  </span>
+                )}
+                {showFeaturedOnly && (
+                  <span className="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded flex items-center gap-1">
+                    <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                    Featured Only
+                  </span>
+                )}
                 {sortBy !== 'newest' && (
                   <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded capitalize">
                     Sort: {sortBy === 'price-low' ? 'Price: Low to High' : sortBy === 'price-high' ? 'Price: High to Low' : sortBy === 'oldest' ? 'Oldest First' : sortBy}
@@ -378,6 +502,8 @@ export default function PropertiesPage() {
                     setListingTypeFilter('all');
                     setBedroomsFilter('all');
                     setBathroomsFilter('all');
+                    setCityFilter('all');
+                    setShowFeaturedOnly(false);
                     setSortBy('newest');
                     setPriceRange({ min: '', max: '' });
                   }}
@@ -393,11 +519,87 @@ export default function PropertiesPage() {
         {/* Properties Grid or Map */}
         {filteredAndSortedProperties.length > 0 ? (
           viewMode === 'grid' ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredAndSortedProperties.map((property) => (
-                <PropertyCard key={property.id} property={property} />
-              ))}
-            </div>
+            <>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {currentProperties.map((property) => (
+                  <PropertyCard key={property.id} property={property} />
+                ))}
+              </div>
+
+              {/* Pagination */}
+              {totalPages > 1 && (
+                <div className="mt-12 flex flex-col items-center gap-4">
+                  {/* Page info */}
+                  <div className="text-sm text-gray-600">
+                    Page {currentPage} of {totalPages} ({totalProperties} total properties)
+                  </div>
+
+                  {/* Pagination controls */}
+                  <div className="flex items-center gap-2">
+                    {/* Previous Button */}
+                    <button
+                      onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                      disabled={currentPage === 1}
+                      className="flex items-center gap-2 px-4 py-2 bg-white border-2 border-gray-300 rounded-lg font-medium text-gray-700 hover:bg-gray-50 hover:border-gray-400 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-white disabled:hover:border-gray-300 transition shadow-sm"
+                    >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                      </svg>
+                      Previous
+                    </button>
+
+                    {/* Page Numbers */}
+                    <div className="flex gap-1">
+                      {[...Array(totalPages)].map((_, index) => {
+                        const pageNumber = index + 1;
+                        // Show first page, last page, current page, and pages around current
+                        if (
+                          pageNumber === 1 ||
+                          pageNumber === totalPages ||
+                          (pageNumber >= currentPage - 1 && pageNumber <= currentPage + 1)
+                        ) {
+                          return (
+                            <button
+                              key={pageNumber}
+                              onClick={() => setCurrentPage(pageNumber)}
+                              className={`min-w-[44px] px-4 py-2 rounded-lg font-medium transition shadow-sm ${
+                                currentPage === pageNumber
+                                  ? 'bg-blue-600 text-white shadow-md hover:bg-blue-700'
+                                  : 'bg-white border-2 border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-gray-400'
+                              }`}
+                            >
+                              {pageNumber}
+                            </button>
+                          );
+                        } else if (
+                          pageNumber === currentPage - 2 ||
+                          pageNumber === currentPage + 2
+                        ) {
+                          return (
+                            <span key={pageNumber} className="px-2 py-2 text-gray-500 font-medium">
+                              ...
+                            </span>
+                          );
+                        }
+                        return null;
+                      })}
+                    </div>
+
+                    {/* Next Button */}
+                    <button
+                      onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                      disabled={currentPage === totalPages}
+                      className="flex items-center gap-2 px-4 py-2 bg-white border-2 border-gray-300 rounded-lg font-medium text-gray-700 hover:bg-gray-50 hover:border-gray-400 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-white disabled:hover:border-gray-300 transition shadow-sm"
+                    >
+                      Next
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              )}
+            </>
           ) : (
             <PropertyMap properties={filteredAndSortedProperties} />
           )
@@ -415,6 +617,8 @@ export default function PropertiesPage() {
                 setListingTypeFilter('all');
                 setBedroomsFilter('all');
                 setBathroomsFilter('all');
+                setCityFilter('all');
+                setShowFeaturedOnly(false);
                 setSortBy('newest');
                 setPriceRange({ min: '', max: '' });
               }}
