@@ -67,77 +67,77 @@ export default function AdminDashboard() {
 
   return (
     <ProtectedRoute>
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen">
         <AdminNav />
 
         <div className="container mx-auto px-4 py-8">
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
-            <p className="text-gray-600 mt-1">Welcome to your admin panel</p>
+            <h1 className="text-3xl font-bold text-white">Dashboard</h1>
+            <p className="text-gray-400 mt-1">Welcome to your admin panel</p>
           </div>
 
           {/* Stats Grid */}
           {loading ? (
             <div className="text-center py-12">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto"></div>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-              <div className="bg-white rounded-lg shadow p-6">
+              <div className="bg-gray-800 rounded-lg shadow-lg p-6 border border-gray-700">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-gray-600">Total Properties</p>
-                    <p className="text-3xl font-bold text-gray-900 mt-2">{stats.total}</p>
+                    <p className="text-sm font-medium text-gray-400">Total Properties</p>
+                    <p className="text-3xl font-bold text-white mt-2">{stats.total}</p>
                   </div>
                   <div className="text-4xl">🏠</div>
                 </div>
               </div>
 
-              <div className="bg-white rounded-lg shadow p-6">
+              <div className="bg-gray-800 rounded-lg shadow-lg p-6 border border-gray-700">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-gray-600">Active Listings</p>
-                    <p className="text-3xl font-bold text-green-600 mt-2">{stats.active}</p>
+                    <p className="text-sm font-medium text-gray-400">Active Listings</p>
+                    <p className="text-3xl font-bold text-green-400 mt-2">{stats.active}</p>
                   </div>
                   <div className="text-4xl">✅</div>
                 </div>
               </div>
 
-              <div className="bg-white rounded-lg shadow p-6">
+              <div className="bg-gray-800 rounded-lg shadow-lg p-6 border border-gray-700">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-gray-600">Contact Inquiries</p>
-                    <p className="text-3xl font-bold text-blue-600 mt-2">{stats.inquiries}</p>
+                    <p className="text-sm font-medium text-gray-400">Contact Inquiries</p>
+                    <p className="text-3xl font-bold text-blue-400 mt-2">{stats.inquiries}</p>
                   </div>
                   <div className="text-4xl">📧</div>
                 </div>
               </div>
 
-              <div className="bg-white rounded-lg shadow p-6">
+              <div className="bg-gray-800 rounded-lg shadow-lg p-6 border border-gray-700">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-gray-600">Viewing Schedules</p>
-                    <p className="text-3xl font-bold text-purple-600 mt-2">{stats.viewings}</p>
+                    <p className="text-sm font-medium text-gray-400">Viewing Schedules</p>
+                    <p className="text-3xl font-bold text-purple-400 mt-2">{stats.viewings}</p>
                   </div>
                   <div className="text-4xl">📅</div>
                 </div>
               </div>
 
-              <div className="bg-white rounded-lg shadow p-6">
+              <div className="bg-gray-800 rounded-lg shadow-lg p-6 border border-gray-700">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-gray-600">Sold</p>
-                    <p className="text-3xl font-bold text-orange-600 mt-2">{stats.sold}</p>
+                    <p className="text-sm font-medium text-gray-400">Sold</p>
+                    <p className="text-3xl font-bold text-orange-400 mt-2">{stats.sold}</p>
                   </div>
                   <div className="text-4xl">💰</div>
                 </div>
               </div>
 
-              <div className="bg-white rounded-lg shadow p-6">
+              <div className="bg-gray-800 rounded-lg shadow-lg p-6 border border-gray-700">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-gray-600">Rented</p>
-                    <p className="text-3xl font-bold text-teal-600 mt-2">{stats.rented}</p>
+                    <p className="text-sm font-medium text-gray-400">Rented</p>
+                    <p className="text-3xl font-bold text-teal-400 mt-2">{stats.rented}</p>
                   </div>
                   <div className="text-4xl">🔑</div>
                 </div>
@@ -146,97 +146,110 @@ export default function AdminDashboard() {
           )}
 
           {/* Quick Actions */}
-          <div className="bg-white rounded-lg shadow p-6">
-            <h2 className="text-xl font-bold text-gray-900 mb-4">Quick Actions</h2>
+          <div className="bg-gray-800 rounded-lg shadow-lg p-6 border border-gray-700">
+            <h2 className="text-xl font-bold text-white mb-4">Quick Actions</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               <Link
                 href="/admin/properties/new"
-                className="flex items-center p-4 border-2 border-dashed border-gray-300 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition group"
+                className="flex items-center p-4 border-2 border-dashed border-gray-600 rounded-lg hover:border-blue-500 hover:bg-gray-700 transition group"
               >
                 <div className="text-3xl mr-4">➕</div>
                 <div>
-                  <div className="font-semibold text-gray-900 group-hover:text-blue-600">
+                  <div className="font-semibold text-white group-hover:text-blue-400">
                     Add New Property
                   </div>
-                  <div className="text-sm text-gray-600">Create a new listing</div>
+                  <div className="text-sm text-gray-400">Create a new listing</div>
                 </div>
               </Link>
 
               <Link
                 href="/admin/properties"
-                className="flex items-center p-4 border-2 border-dashed border-gray-300 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition group"
+                className="flex items-center p-4 border-2 border-dashed border-gray-600 rounded-lg hover:border-blue-500 hover:bg-gray-700 transition group"
               >
                 <div className="text-3xl mr-4">📋</div>
                 <div>
-                  <div className="font-semibold text-gray-900 group-hover:text-blue-600">
+                  <div className="font-semibold text-white group-hover:text-blue-400">
                     Manage Properties
                   </div>
-                  <div className="text-sm text-gray-600">Edit or delete listings</div>
+                  <div className="text-sm text-gray-400">Edit or delete listings</div>
                 </div>
               </Link>
 
               <Link
                 href="/admin/inquiries"
-                className="flex items-center p-4 border-2 border-dashed border-gray-300 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition group"
+                className="flex items-center p-4 border-2 border-dashed border-gray-600 rounded-lg hover:border-blue-500 hover:bg-gray-700 transition group"
               >
                 <div className="text-3xl mr-4">📧</div>
                 <div>
-                  <div className="font-semibold text-gray-900 group-hover:text-blue-600">
+                  <div className="font-semibold text-white group-hover:text-blue-400">
                     Contact Inquiries
                   </div>
-                  <div className="text-sm text-gray-600">View contact requests</div>
+                  <div className="text-sm text-gray-400">View contact requests</div>
                 </div>
               </Link>
 
               <Link
                 href="/admin/viewings"
-                className="flex items-center p-4 border-2 border-dashed border-gray-300 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition group"
+                className="flex items-center p-4 border-2 border-dashed border-gray-600 rounded-lg hover:border-blue-500 hover:bg-gray-700 transition group"
               >
                 <div className="text-3xl mr-4">📅</div>
                 <div>
-                  <div className="font-semibold text-gray-900 group-hover:text-blue-600">
+                  <div className="font-semibold text-white group-hover:text-blue-400">
                     Viewing Schedules
                   </div>
-                  <div className="text-sm text-gray-600">Manage appointments</div>
+                  <div className="text-sm text-gray-400">Manage appointments</div>
                 </div>
               </Link>
 
               <Link
                 href="/admin/analytics"
-                className="flex items-center p-4 border-2 border-dashed border-gray-300 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition group"
+                className="flex items-center p-4 border-2 border-dashed border-gray-600 rounded-lg hover:border-blue-500 hover:bg-gray-700 transition group"
               >
                 <div className="text-3xl mr-4">📊</div>
                 <div>
-                  <div className="font-semibold text-gray-900 group-hover:text-blue-600">
+                  <div className="font-semibold text-white group-hover:text-blue-400">
                     Property Analytics
                   </div>
-                  <div className="text-sm text-gray-600">Views, inquiries & more</div>
+                  <div className="text-sm text-gray-400">Views, inquiries & more</div>
+                </div>
+              </Link>
+
+              <Link
+                href="/admin/user-analytics"
+                className="flex items-center p-4 border-2 border-dashed border-gray-600 rounded-lg hover:border-blue-500 hover:bg-gray-700 transition group"
+              >
+                <div className="text-3xl mr-4">📈</div>
+                <div>
+                  <div className="font-semibold text-white group-hover:text-blue-400">
+                    User Analytics
+                  </div>
+                  <div className="text-sm text-gray-400">User stats & activity</div>
                 </div>
               </Link>
 
               <Link
                 href="/admin/users"
-                className="flex items-center p-4 border-2 border-dashed border-gray-300 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition group"
+                className="flex items-center p-4 border-2 border-dashed border-gray-600 rounded-lg hover:border-blue-500 hover:bg-gray-700 transition group"
               >
                 <div className="text-3xl mr-4">👥</div>
                 <div>
-                  <div className="font-semibold text-gray-900 group-hover:text-blue-600">
+                  <div className="font-semibold text-white group-hover:text-blue-400">
                     User Management
                   </div>
-                  <div className="text-sm text-gray-600">Manage subscriptions</div>
+                  <div className="text-sm text-gray-400">Manage subscriptions</div>
                 </div>
               </Link>
 
               <Link
                 href="/"
-                className="flex items-center p-4 border-2 border-dashed border-gray-300 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition group"
+                className="flex items-center p-4 border-2 border-dashed border-gray-600 rounded-lg hover:border-blue-500 hover:bg-gray-700 transition group"
               >
                 <div className="text-3xl mr-4">👁️</div>
                 <div>
-                  <div className="font-semibold text-gray-900 group-hover:text-blue-600">
+                  <div className="font-semibold text-white group-hover:text-blue-400">
                     View Public Site
                   </div>
-                  <div className="text-sm text-gray-600">See what users see</div>
+                  <div className="text-sm text-gray-400">See what users see</div>
                 </div>
               </Link>
             </div>

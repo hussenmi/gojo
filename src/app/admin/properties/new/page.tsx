@@ -179,22 +179,22 @@ export default function NewPropertyPage() {
 
   return (
     <ProtectedRoute>
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-gray-950">
         <AdminNav />
 
         <div className="container mx-auto px-4 py-8 max-w-4xl">
           <div className="mb-6">
-            <h1 className="text-3xl font-bold text-gray-900">Add New Property</h1>
-            <p className="text-gray-600 mt-1">Create a new property listing</p>
+            <h1 className="text-3xl font-bold text-white">Add New Property</h1>
+            <p className="text-gray-400 mt-1">Create a new property listing</p>
           </div>
 
-          <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow p-6 space-y-6">
+          <form onSubmit={handleSubmit} className="bg-gray-800 rounded-lg shadow p-6 space-y-6">
             {/* Basic Information */}
             <div>
-              <h2 className="text-xl font-semibold text-gray-900 mb-4">Basic Information</h2>
+              <h2 className="text-xl font-semibold text-white mb-4">Basic Information</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="md:col-span-2">
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-gray-300 mb-1">
                     Title (English) *
                   </label>
                   <input
@@ -203,13 +203,13 @@ export default function NewPropertyPage() {
                     required
                     value={formData.title}
                     onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
+                    className="w-full px-4 py-2 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white bg-gray-700"
                     placeholder="Modern Villa in Bole"
                   />
                 </div>
 
                 <div className="md:col-span-2">
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-gray-300 mb-1">
                     Title (Amharic)
                   </label>
                   <input
@@ -217,13 +217,13 @@ export default function NewPropertyPage() {
                     name="title_am"
                     value={formData.title_am}
                     onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
+                    className="w-full px-4 py-2 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white bg-gray-700"
                     placeholder="ዘመናዊ ቪላ በቦሌ"
                   />
                 </div>
 
                 <div className="md:col-span-2">
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-gray-300 mb-1">
                     Description (English) *
                   </label>
                   <textarea
@@ -232,13 +232,13 @@ export default function NewPropertyPage() {
                     value={formData.description}
                     onChange={handleChange}
                     rows={4}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
+                    className="w-full px-4 py-2 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white bg-gray-700"
                     placeholder="Detailed description of the property..."
                   />
                 </div>
 
                 <div className="md:col-span-2">
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-gray-300 mb-1">
                     Description (Amharic)
                   </label>
                   <textarea
@@ -246,7 +246,7 @@ export default function NewPropertyPage() {
                     value={formData.description_am}
                     onChange={handleChange}
                     rows={4}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
+                    className="w-full px-4 py-2 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white bg-gray-700"
                     placeholder="የንብረቱ ዝርዝር መግለጫ..."
                   />
                 </div>
@@ -255,10 +255,10 @@ export default function NewPropertyPage() {
 
             {/* Property Details */}
             <div>
-              <h2 className="text-xl font-semibold text-gray-900 mb-4">Property Details</h2>
+              <h2 className="text-xl font-semibold text-white mb-4">Property Details</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-gray-300 mb-1">
                     Property Type *
                   </label>
                   <select
@@ -266,7 +266,7 @@ export default function NewPropertyPage() {
                     required
                     value={formData.property_type}
                     onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
+                    className="w-full px-4 py-2 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white bg-gray-700"
                   >
                     <option value="house">House</option>
                     <option value="apartment">Apartment</option>
@@ -276,7 +276,7 @@ export default function NewPropertyPage() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-gray-300 mb-1">
                     Listing Type *
                   </label>
                   <select
@@ -284,7 +284,7 @@ export default function NewPropertyPage() {
                     required
                     value={formData.listing_type}
                     onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
+                    className="w-full px-4 py-2 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white bg-gray-700"
                   >
                     <option value="sale">For Sale</option>
                     <option value="rent">For Rent</option>
@@ -292,7 +292,7 @@ export default function NewPropertyPage() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-gray-300 mb-1">
                     Price (ETB) *
                   </label>
                   <input
@@ -301,13 +301,13 @@ export default function NewPropertyPage() {
                     required
                     value={formData.price}
                     onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
+                    className="w-full px-4 py-2 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white bg-gray-700"
                     placeholder="5000000"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-gray-300 mb-1">
                     Area (m²)
                   </label>
                   <input
@@ -315,13 +315,13 @@ export default function NewPropertyPage() {
                     name="area_sqm"
                     value={formData.area_sqm}
                     onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
+                    className="w-full px-4 py-2 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white bg-gray-700"
                     placeholder="250"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-gray-300 mb-1">
                     Bedrooms
                   </label>
                   <input
@@ -329,13 +329,13 @@ export default function NewPropertyPage() {
                     name="bedrooms"
                     value={formData.bedrooms}
                     onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
+                    className="w-full px-4 py-2 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white bg-gray-700"
                     placeholder="3"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-gray-300 mb-1">
                     Bathrooms
                   </label>
                   <input
@@ -343,7 +343,7 @@ export default function NewPropertyPage() {
                     name="bathrooms"
                     value={formData.bathrooms}
                     onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
+                    className="w-full px-4 py-2 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white bg-gray-700"
                     placeholder="2"
                   />
                 </div>
@@ -352,10 +352,10 @@ export default function NewPropertyPage() {
 
             {/* Location */}
             <div>
-              <h2 className="text-xl font-semibold text-gray-900 mb-4">Location</h2>
+              <h2 className="text-xl font-semibold text-white mb-4">Location</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="md:col-span-2">
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-gray-300 mb-1">
                     Address *
                   </label>
                   <input
@@ -364,13 +364,13 @@ export default function NewPropertyPage() {
                     required
                     value={formData.address}
                     onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
+                    className="w-full px-4 py-2 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white bg-gray-700"
                     placeholder="Bole Subcity, Street 123"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-gray-300 mb-1">
                     City *
                   </label>
                   <input
@@ -379,13 +379,13 @@ export default function NewPropertyPage() {
                     required
                     value={formData.city}
                     onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
+                    className="w-full px-4 py-2 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white bg-gray-700"
                     placeholder="Addis Ababa"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-gray-300 mb-1">
                     Region *
                   </label>
                   <input
@@ -394,13 +394,13 @@ export default function NewPropertyPage() {
                     required
                     value={formData.region}
                     onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
+                    className="w-full px-4 py-2 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white bg-gray-700"
                     placeholder="Addis Ababa"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-gray-300 mb-1">
                     Latitude (optional)
                   </label>
                   <input
@@ -409,13 +409,13 @@ export default function NewPropertyPage() {
                     name="latitude"
                     value={formData.latitude}
                     onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
+                    className="w-full px-4 py-2 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white bg-gray-700"
                     placeholder="9.0320"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-gray-300 mb-1">
                     Longitude (optional)
                   </label>
                   <input
@@ -424,7 +424,7 @@ export default function NewPropertyPage() {
                     name="longitude"
                     value={formData.longitude}
                     onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
+                    className="w-full px-4 py-2 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white bg-gray-700"
                     placeholder="38.7469"
                   />
                 </div>
@@ -433,11 +433,11 @@ export default function NewPropertyPage() {
 
             {/* Images & Status */}
             <div>
-              <h2 className="text-xl font-semibold text-gray-900 mb-4">Images & Status</h2>
+              <h2 className="text-xl font-semibold text-white mb-4">Images & Status</h2>
               <div className="space-y-4">
                 {/* File Upload */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-gray-300 mb-2">
                     Upload Images
                   </label>
                   <div className="flex items-center gap-4">
@@ -454,7 +454,7 @@ export default function NewPropertyPage() {
                       />
                     </label>
                     {uploadingImages && (
-                      <span className="text-sm text-gray-600">Uploading...</span>
+                      <span className="text-sm text-gray-400">Uploading...</span>
                     )}
                   </div>
                   <p className="mt-1 text-sm text-gray-500">
@@ -465,7 +465,7 @@ export default function NewPropertyPage() {
                 {/* Image Previews */}
                 {uploadedImages.length > 0 && (
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-gray-300 mb-2">
                       Uploaded Images ({uploadedImages.length})
                     </label>
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -474,7 +474,7 @@ export default function NewPropertyPage() {
                           <img
                             src={url}
                             alt={`Upload ${index + 1}`}
-                            className="w-full h-32 object-cover rounded-lg border border-gray-300"
+                            className="w-full h-32 object-cover rounded-lg border border-gray-600"
                           />
                           <button
                             type="button"
@@ -493,7 +493,7 @@ export default function NewPropertyPage() {
 
                 {/* Optional: Manual URL Input */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-gray-300 mb-1">
                     Or paste Image URLs (comma-separated, optional)
                   </label>
                   <textarea
@@ -501,7 +501,7 @@ export default function NewPropertyPage() {
                     value={formData.images}
                     onChange={handleChange}
                     rows={2}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
+                    className="w-full px-4 py-2 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white bg-gray-700"
                     placeholder="https://example.com/image1.jpg, https://example.com/image2.jpg"
                   />
                   <p className="mt-1 text-sm text-gray-500">
@@ -511,14 +511,14 @@ export default function NewPropertyPage() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-medium text-gray-300 mb-1">
                       Status
                     </label>
                     <select
                       name="status"
                       value={formData.status}
                       onChange={handleChange}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
+                      className="w-full px-4 py-2 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white bg-gray-700"
                     >
                       <option value="active">Active</option>
                       <option value="pending">Pending</option>
@@ -543,13 +543,13 @@ export default function NewPropertyPage() {
                                   name="featured"
                                   checked={formData.featured}
                                   onChange={handleChange}
-                                  className="rounded border-gray-300 text-yellow-600 focus:ring-yellow-500 h-5 w-5"
+                                  className="rounded border-gray-600 text-yellow-600 focus:ring-yellow-500 h-5 w-5"
                                 />
                                 <span className="ml-3">
-                                  <span className="text-base font-bold text-gray-900 block">
+                                  <span className="text-base font-bold text-white block">
                                     Make this a Featured Property
                                   </span>
-                                  <span className="text-sm text-gray-700">
+                                  <span className="text-sm text-gray-300">
                                     ⭐ Premium feature: Top placement • Homepage visibility • Detailed analytics
                                   </span>
                                 </span>
@@ -560,16 +560,16 @@ export default function NewPropertyPage() {
                       </div>
                     ) : userTier === 'free' ? (
                       <div className="w-full">
-                        <div className="bg-gray-50 border-2 border-gray-300 rounded-lg p-4 opacity-60">
+                        <div className="bg-gray-950 border-2 border-gray-600 rounded-lg p-4 opacity-60">
                           <div className="flex items-start gap-3">
                             <svg className="w-6 h-6 text-gray-400 mt-1" fill="currentColor" viewBox="0 0 20 20">
                               <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
                             </svg>
                             <div className="flex-1">
-                              <div className="text-base font-bold text-gray-900 mb-1">
+                              <div className="text-base font-bold text-white mb-1">
                                 Featured Property (Premium Only)
                               </div>
-                              <p className="text-sm text-gray-600 mb-3">
+                              <p className="text-sm text-gray-400 mb-3">
                                 Upgrade to Premium to feature your properties and get 3-5x more inquiries
                               </p>
                               <button
@@ -594,7 +594,7 @@ export default function NewPropertyPage() {
               <button
                 type="button"
                 onClick={() => router.back()}
-                className="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition"
+                className="px-6 py-2 border border-gray-600 rounded-lg text-gray-300 hover:bg-gray-950 transition"
               >
                 Cancel
               </button>

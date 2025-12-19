@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { ProtectedRoute } from '@/components/auth/ProtectedRoute';
-import { AdminNav } from '@/components/admin/AdminNav';
 import { supabase } from '@/lib/supabase';
 import { PropertyType, ListingType, Property } from '@/types/property';
 import type { Database } from '@/types/database';
@@ -76,7 +75,7 @@ export default function EditPropertyPage() {
     } catch (error) {
       console.error('Error fetching property:', error);
       alert('Failed to load property');
-      router.push('/admin/properties');
+      router.push('/my-properties');
     } finally {
       setLoading(false);
     }
@@ -122,7 +121,7 @@ export default function EditPropertyPage() {
       if (error) throw error;
 
       alert('Property updated successfully!');
-      router.push('/admin/properties');
+      router.push('/my-properties');
     } catch (error: any) {
       console.error('Error updating property:', error);
       alert('Error: ' + (error.message || 'Failed to update property'));
@@ -143,7 +142,6 @@ export default function EditPropertyPage() {
     return (
       <ProtectedRoute>
         <div className="min-h-screen bg-gray-50">
-          <AdminNav />
           <div className="container mx-auto px-4 py-8">
             <div className="text-center py-12">
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
@@ -158,8 +156,6 @@ export default function EditPropertyPage() {
   return (
     <ProtectedRoute>
       <div className="min-h-screen bg-gray-50">
-        <AdminNav />
-
         <div className="container mx-auto px-4 py-8 max-w-4xl">
           <div className="mb-6">
             <h1 className="text-3xl font-bold text-gray-900">Edit Property</h1>

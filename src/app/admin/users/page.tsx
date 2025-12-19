@@ -99,7 +99,7 @@ export default function AdminUsersPage() {
   if (loading) {
     return (
       <ProtectedRoute>
-        <div className="min-h-screen bg-gray-50">
+        <div className="min-h-screen bg-gray-950">
           <AdminNav />
           <div className="container mx-auto px-4 py-8">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
@@ -111,7 +111,7 @@ export default function AdminUsersPage() {
 
   return (
     <ProtectedRoute>
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-gray-950">
         <AdminNav />
 
         <div className="container mx-auto px-4 py-8">
@@ -119,8 +119,8 @@ export default function AdminUsersPage() {
           <div className="mb-8">
             <div className="flex items-center justify-between mb-4">
               <div>
-                <h1 className="text-4xl font-bold text-gray-900 mb-2">User Management</h1>
-                <p className="text-gray-600">
+                <h1 className="text-4xl font-bold text-white mb-2">User Management</h1>
+                <p className="text-gray-400">
                   Manage user subscriptions and view user statistics
                 </p>
               </div>
@@ -134,9 +134,9 @@ export default function AdminUsersPage() {
 
             {/* Stats Cards */}
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-              <div className="bg-white rounded-lg shadow p-4">
-                <div className="text-sm text-gray-600 mb-1">Total Users</div>
-                <div className="text-2xl font-bold text-gray-900">{users.length}</div>
+              <div className="bg-gray-800 rounded-lg shadow p-4">
+                <div className="text-sm text-gray-400 mb-1">Total Users</div>
+                <div className="text-2xl font-bold text-white">{users.length}</div>
               </div>
               <div className="bg-green-50 rounded-lg shadow p-4">
                 <div className="text-sm text-green-600 mb-1">Premium Users</div>
@@ -160,11 +160,11 @@ export default function AdminUsersPage() {
 
             {/* Filter */}
             <div className="flex gap-2">
-              <span className="text-sm text-gray-600 flex items-center">Filter:</span>
+              <span className="text-sm text-gray-400 flex items-center">Filter:</span>
               <button
                 onClick={() => setFilterTier('all')}
                 className={`px-3 py-1 rounded-lg text-sm font-medium transition ${
-                  filterTier === 'all' ? 'bg-blue-600 text-white' : 'bg-white text-gray-700 hover:bg-gray-100'
+                  filterTier === 'all' ? 'bg-blue-600 text-white' : 'bg-gray-800 text-gray-300 hover:bg-gray-100'
                 }`}
               >
                 All Users
@@ -172,7 +172,7 @@ export default function AdminUsersPage() {
               <button
                 onClick={() => setFilterTier('premium')}
                 className={`px-3 py-1 rounded-lg text-sm font-medium transition ${
-                  filterTier === 'premium' ? 'bg-blue-600 text-white' : 'bg-white text-gray-700 hover:bg-gray-100'
+                  filterTier === 'premium' ? 'bg-blue-600 text-white' : 'bg-gray-800 text-gray-300 hover:bg-gray-100'
                 }`}
               >
                 Premium
@@ -180,7 +180,7 @@ export default function AdminUsersPage() {
               <button
                 onClick={() => setFilterTier('free')}
                 className={`px-3 py-1 rounded-lg text-sm font-medium transition ${
-                  filterTier === 'free' ? 'bg-blue-600 text-white' : 'bg-white text-gray-700 hover:bg-gray-100'
+                  filterTier === 'free' ? 'bg-blue-600 text-white' : 'bg-gray-800 text-gray-300 hover:bg-gray-100'
                 }`}
               >
                 Free
@@ -189,10 +189,10 @@ export default function AdminUsersPage() {
           </div>
 
           {/* Users Table */}
-          <div className="bg-white rounded-lg shadow overflow-hidden">
+          <div className="bg-gray-800 rounded-lg shadow overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full">
-                <thead className="bg-gray-50 border-b border-gray-200">
+                <thead className="bg-gray-950 border-b border-gray-700">
                   <tr>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       User
@@ -211,7 +211,7 @@ export default function AdminUsersPage() {
                     </th>
                   </tr>
                 </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
+                <tbody className="bg-gray-800 divide-y divide-gray-200">
                   {filteredUsers.length === 0 ? (
                     <tr>
                       <td colSpan={5} className="px-6 py-8 text-center text-gray-500">
@@ -220,9 +220,9 @@ export default function AdminUsersPage() {
                     </tr>
                   ) : (
                     filteredUsers.map((user) => (
-                      <tr key={user.id} className="hover:bg-gray-50">
+                      <tr key={user.id} className="hover:bg-gray-950">
                         <td className="px-6 py-4">
-                          <div className="text-sm font-medium text-gray-900">{user.email}</div>
+                          <div className="text-sm font-medium text-white">{user.email}</div>
                           <div className="text-xs text-gray-500">ID: {user.id.substring(0, 8)}...</div>
                         </td>
                         <td className="px-6 py-4">
@@ -241,7 +241,7 @@ export default function AdminUsersPage() {
                           )}
                         </td>
                         <td className="px-6 py-4 text-sm">
-                          <div className="font-semibold text-gray-900">
+                          <div className="font-semibold text-white">
                             {user.total_properties} total
                           </div>
                           <div className="text-xs text-gray-500">
@@ -262,7 +262,7 @@ export default function AdminUsersPage() {
                           ) : user.subscription_tier === 'premium' ? (
                             <button
                               onClick={() => downgradeToFree(user.id, user.email)}
-                              className="px-4 py-2 border-2 border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition font-semibold"
+                              className="px-4 py-2 border-2 border-gray-600 text-gray-300 rounded-lg hover:bg-gray-950 transition font-semibold"
                             >
                               Downgrade to Free
                             </button>

@@ -21,14 +21,14 @@ export function AdminNav() {
   ];
 
   return (
-    <nav className="bg-white shadow-sm border-b border-gray-200">
+    <nav className="bg-gray-900 shadow-lg border-b border-gray-800">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link href="/admin" className="flex items-center space-x-3">
             <Logo width={120} height={40} />
-            <span className="text-sm font-medium text-gray-500 hidden md:inline">
-              Admin
+            <span className="text-sm font-medium text-gray-400 hidden md:inline">
+              Admin Panel
             </span>
           </Link>
 
@@ -40,8 +40,8 @@ export function AdminNav() {
                 href={item.href}
                 className={`px-4 py-2 rounded-lg text-sm font-medium transition ${
                   pathname === item.href
-                    ? 'bg-blue-50 text-blue-700'
-                    : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                    ? 'bg-blue-600 text-white'
+                    : 'text-gray-300 hover:bg-gray-800 hover:text-white'
                 }`}
               >
                 <span className="mr-2">{item.icon}</span>
@@ -54,13 +54,13 @@ export function AdminNav() {
           <div className="flex items-center space-x-4">
             <Link
               href="/"
-              className="text-sm text-gray-600 hover:text-gray-900 hidden sm:inline"
+              className="text-sm text-gray-400 hover:text-white hidden sm:inline"
             >
               View Site
             </Link>
             <button
               onClick={handleSignOut}
-              className="text-sm text-red-600 hover:text-red-800 font-medium"
+              className="text-sm text-red-400 hover:text-red-300 font-medium"
             >
               Sign Out
             </button>

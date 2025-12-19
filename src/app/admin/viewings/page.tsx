@@ -95,7 +95,7 @@ export default function AdminViewingsPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 py-8">
+      <div className="min-h-screen bg-gray-950 py-8">
         <div className="container mx-auto px-4">
           {/* Header Skeleton */}
           <div className="mb-8 animate-pulse">
@@ -110,7 +110,7 @@ export default function AdminViewingsPage() {
             {/* Stats Skeleton */}
             <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mb-6">
               {[...Array(5)].map((_, i) => (
-                <div key={i} className="bg-white rounded-lg shadow p-4">
+                <div key={i} className="bg-gray-800 rounded-lg shadow p-4">
                   <div className="h-4 bg-gray-200 rounded w-24 mb-2"></div>
                   <div className="h-8 bg-gray-200 rounded w-16"></div>
                 </div>
@@ -126,9 +126,9 @@ export default function AdminViewingsPage() {
           </div>
 
           {/* Table Skeleton */}
-          <div className="bg-white rounded-lg shadow overflow-hidden">
+          <div className="bg-gray-800 rounded-lg shadow overflow-hidden">
             <table className="w-full">
-              <thead className="bg-gray-50 border-b border-gray-200">
+              <thead className="bg-gray-950 border-b border-gray-700">
                 <tr>
                   <th className="px-6 py-3 text-left">Scheduled For</th>
                   <th className="px-6 py-3 text-left">Contact Info</th>
@@ -151,14 +151,14 @@ export default function AdminViewingsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
+    <div className="min-h-screen bg-gray-950 py-8">
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="mb-8">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <h1 className="text-4xl font-bold text-gray-900 mb-2">Viewing Schedules</h1>
-              <p className="text-gray-600">
+              <h1 className="text-4xl font-bold text-white mb-2">Viewing Schedules</h1>
+              <p className="text-gray-400">
                 Manage property viewing appointments
               </p>
             </div>
@@ -172,30 +172,30 @@ export default function AdminViewingsPage() {
 
           {/* Stats */}
           <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mb-6">
-            <div className="bg-white rounded-lg shadow p-4">
-              <div className="text-sm text-gray-600 mb-1">Total Viewings</div>
-              <div className="text-2xl font-bold text-gray-900">{viewings.length}</div>
+            <div className="bg-gray-800 rounded-lg shadow p-4">
+              <div className="text-sm text-gray-400 mb-1">Total Viewings</div>
+              <div className="text-2xl font-bold text-white">{viewings.length}</div>
             </div>
-            <div className="bg-white rounded-lg shadow p-4">
-              <div className="text-sm text-gray-600 mb-1">Pending</div>
+            <div className="bg-gray-800 rounded-lg shadow p-4">
+              <div className="text-sm text-gray-400 mb-1">Pending</div>
               <div className="text-2xl font-bold text-yellow-600">
                 {viewings.filter(v => v.status === 'pending').length}
               </div>
             </div>
-            <div className="bg-white rounded-lg shadow p-4">
-              <div className="text-sm text-gray-600 mb-1">Confirmed</div>
+            <div className="bg-gray-800 rounded-lg shadow p-4">
+              <div className="text-sm text-gray-400 mb-1">Confirmed</div>
               <div className="text-2xl font-bold text-blue-600">
                 {viewings.filter(v => v.status === 'confirmed').length}
               </div>
             </div>
-            <div className="bg-white rounded-lg shadow p-4">
-              <div className="text-sm text-gray-600 mb-1">Completed</div>
+            <div className="bg-gray-800 rounded-lg shadow p-4">
+              <div className="text-sm text-gray-400 mb-1">Completed</div>
               <div className="text-2xl font-bold text-green-600">
                 {viewings.filter(v => v.status === 'completed').length}
               </div>
             </div>
-            <div className="bg-white rounded-lg shadow p-4">
-              <div className="text-sm text-gray-600 mb-1">Cancelled</div>
+            <div className="bg-gray-800 rounded-lg shadow p-4">
+              <div className="text-sm text-gray-400 mb-1">Cancelled</div>
               <div className="text-2xl font-bold text-red-600">
                 {viewings.filter(v => v.status === 'cancelled').length}
               </div>
@@ -209,7 +209,7 @@ export default function AdminViewingsPage() {
               className={`px-4 py-2 rounded-lg font-medium transition ${
                 statusFilter === 'all'
                   ? 'bg-blue-600 text-white'
-                  : 'bg-white text-gray-700 hover:bg-gray-100'
+                  : 'bg-gray-800 text-gray-300 hover:bg-gray-100'
               }`}
             >
               All
@@ -219,7 +219,7 @@ export default function AdminViewingsPage() {
               className={`px-4 py-2 rounded-lg font-medium transition ${
                 statusFilter === 'pending'
                   ? 'bg-blue-600 text-white'
-                  : 'bg-white text-gray-700 hover:bg-gray-100'
+                  : 'bg-gray-800 text-gray-300 hover:bg-gray-100'
               }`}
             >
               Pending
@@ -229,7 +229,7 @@ export default function AdminViewingsPage() {
               className={`px-4 py-2 rounded-lg font-medium transition ${
                 statusFilter === 'confirmed'
                   ? 'bg-blue-600 text-white'
-                  : 'bg-white text-gray-700 hover:bg-gray-100'
+                  : 'bg-gray-800 text-gray-300 hover:bg-gray-100'
               }`}
             >
               Confirmed
@@ -239,7 +239,7 @@ export default function AdminViewingsPage() {
               className={`px-4 py-2 rounded-lg font-medium transition ${
                 statusFilter === 'completed'
                   ? 'bg-blue-600 text-white'
-                  : 'bg-white text-gray-700 hover:bg-gray-100'
+                  : 'bg-gray-800 text-gray-300 hover:bg-gray-100'
               }`}
             >
               Completed
@@ -249,7 +249,7 @@ export default function AdminViewingsPage() {
               className={`px-4 py-2 rounded-lg font-medium transition ${
                 statusFilter === 'cancelled'
                   ? 'bg-blue-600 text-white'
-                  : 'bg-white text-gray-700 hover:bg-gray-100'
+                  : 'bg-gray-800 text-gray-300 hover:bg-gray-100'
               }`}
             >
               Cancelled
@@ -258,10 +258,10 @@ export default function AdminViewingsPage() {
         </div>
 
         {/* Viewings Table */}
-        <div className="bg-white rounded-lg shadow overflow-hidden">
+        <div className="bg-gray-800 rounded-lg shadow overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full">
-              <thead className="bg-gray-50 border-b border-gray-200">
+              <thead className="bg-gray-950 border-b border-gray-700">
                 <tr>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Scheduled For
@@ -283,7 +283,7 @@ export default function AdminViewingsPage() {
                   </th>
                 </tr>
               </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
+              <tbody className="bg-gray-800 divide-y divide-gray-200">
                 {filteredViewings.length === 0 ? (
                   <tr>
                     <td colSpan={6} className="px-6 py-8 text-center text-gray-500">
@@ -292,21 +292,21 @@ export default function AdminViewingsPage() {
                   </tr>
                 ) : (
                   filteredViewings.map((viewing) => (
-                    <tr key={viewing.id} className="hover:bg-gray-50">
+                    <tr key={viewing.id} className="hover:bg-gray-950">
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm font-medium text-gray-900">
+                        <div className="text-sm font-medium text-white">
                           {formatDate(viewing.preferred_date)}
                         </div>
-                        <div className="text-sm text-gray-600">{viewing.preferred_time}</div>
+                        <div className="text-sm text-gray-400">{viewing.preferred_time}</div>
                         <div className="text-xs text-gray-500 mt-1">
                           Requested: {formatDateTime(viewing.created_at)}
                         </div>
                       </td>
                       <td className="px-6 py-4 text-sm">
-                        <div className="font-medium text-gray-900">{viewing.name}</div>
-                        <div className="text-gray-600">{viewing.email}</div>
+                        <div className="font-medium text-white">{viewing.name}</div>
+                        <div className="text-gray-400">{viewing.email}</div>
                         {viewing.phone && (
-                          <div className="text-gray-600">{viewing.phone}</div>
+                          <div className="text-gray-400">{viewing.phone}</div>
                         )}
                       </td>
                       <td className="px-6 py-4 text-sm">
@@ -317,7 +317,7 @@ export default function AdminViewingsPage() {
                           View Property →
                         </Link>
                       </td>
-                      <td className="px-6 py-4 text-sm text-gray-700 max-w-xs">
+                      <td className="px-6 py-4 text-sm text-gray-300 max-w-xs">
                         {viewing.message ? (
                           <div className="line-clamp-2">{viewing.message}</div>
                         ) : (
@@ -333,7 +333,7 @@ export default function AdminViewingsPage() {
                         <select
                           value={viewing.status}
                           onChange={(e) => updateStatus(viewing.id, e.target.value as any)}
-                          className="border border-gray-300 rounded px-2 py-1 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          className="border border-gray-600 rounded px-2 py-1 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                         >
                           <option value="pending">Pending</option>
                           <option value="confirmed">Confirmed</option>

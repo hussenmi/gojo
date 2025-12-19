@@ -84,7 +84,7 @@ export default function AdminInquiriesPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 py-8">
+      <div className="min-h-screen bg-gray-950 py-8">
         <div className="container mx-auto px-4">
           {/* Header Skeleton */}
           <div className="mb-8 animate-pulse">
@@ -99,7 +99,7 @@ export default function AdminInquiriesPage() {
             {/* Stats Skeleton */}
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
               {[...Array(4)].map((_, i) => (
-                <div key={i} className="bg-white rounded-lg shadow p-4">
+                <div key={i} className="bg-gray-800 rounded-lg shadow p-4">
                   <div className="h-4 bg-gray-200 rounded w-24 mb-2"></div>
                   <div className="h-8 bg-gray-200 rounded w-16"></div>
                 </div>
@@ -115,9 +115,9 @@ export default function AdminInquiriesPage() {
           </div>
 
           {/* Table Skeleton */}
-          <div className="bg-white rounded-lg shadow overflow-hidden">
+          <div className="bg-gray-800 rounded-lg shadow overflow-hidden">
             <table className="w-full">
-              <thead className="bg-gray-50 border-b border-gray-200">
+              <thead className="bg-gray-950 border-b border-gray-700">
                 <tr>
                   <th className="px-6 py-3 text-left">Date</th>
                   <th className="px-6 py-3 text-left">Contact Info</th>
@@ -140,14 +140,14 @@ export default function AdminInquiriesPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
+    <div className="min-h-screen bg-gray-950 py-8">
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="mb-8">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <h1 className="text-4xl font-bold text-gray-900 mb-2">Contact Inquiries</h1>
-              <p className="text-gray-600">
+              <h1 className="text-4xl font-bold text-white mb-2">Contact Inquiries</h1>
+              <p className="text-gray-400">
                 Manage property contact inquiries from potential buyers
               </p>
             </div>
@@ -161,25 +161,25 @@ export default function AdminInquiriesPage() {
 
           {/* Stats */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-            <div className="bg-white rounded-lg shadow p-4">
-              <div className="text-sm text-gray-600 mb-1">Total Inquiries</div>
-              <div className="text-2xl font-bold text-gray-900">{inquiries.length}</div>
+            <div className="bg-gray-800 rounded-lg shadow p-4">
+              <div className="text-sm text-gray-400 mb-1">Total Inquiries</div>
+              <div className="text-2xl font-bold text-white">{inquiries.length}</div>
             </div>
-            <div className="bg-white rounded-lg shadow p-4">
-              <div className="text-sm text-gray-600 mb-1">New</div>
+            <div className="bg-gray-800 rounded-lg shadow p-4">
+              <div className="text-sm text-gray-400 mb-1">New</div>
               <div className="text-2xl font-bold text-blue-600">
                 {inquiries.filter(i => i.status === 'new').length}
               </div>
             </div>
-            <div className="bg-white rounded-lg shadow p-4">
-              <div className="text-sm text-gray-600 mb-1">Contacted</div>
+            <div className="bg-gray-800 rounded-lg shadow p-4">
+              <div className="text-sm text-gray-400 mb-1">Contacted</div>
               <div className="text-2xl font-bold text-yellow-600">
                 {inquiries.filter(i => i.status === 'contacted').length}
               </div>
             </div>
-            <div className="bg-white rounded-lg shadow p-4">
-              <div className="text-sm text-gray-600 mb-1">Closed</div>
-              <div className="text-2xl font-bold text-gray-600">
+            <div className="bg-gray-800 rounded-lg shadow p-4">
+              <div className="text-sm text-gray-400 mb-1">Closed</div>
+              <div className="text-2xl font-bold text-gray-400">
                 {inquiries.filter(i => i.status === 'closed').length}
               </div>
             </div>
@@ -192,7 +192,7 @@ export default function AdminInquiriesPage() {
               className={`px-4 py-2 rounded-lg font-medium transition ${
                 statusFilter === 'all'
                   ? 'bg-blue-600 text-white'
-                  : 'bg-white text-gray-700 hover:bg-gray-100'
+                  : 'bg-gray-800 text-gray-300 hover:bg-gray-100'
               }`}
             >
               All
@@ -202,7 +202,7 @@ export default function AdminInquiriesPage() {
               className={`px-4 py-2 rounded-lg font-medium transition ${
                 statusFilter === 'new'
                   ? 'bg-blue-600 text-white'
-                  : 'bg-white text-gray-700 hover:bg-gray-100'
+                  : 'bg-gray-800 text-gray-300 hover:bg-gray-100'
               }`}
             >
               New
@@ -212,7 +212,7 @@ export default function AdminInquiriesPage() {
               className={`px-4 py-2 rounded-lg font-medium transition ${
                 statusFilter === 'contacted'
                   ? 'bg-blue-600 text-white'
-                  : 'bg-white text-gray-700 hover:bg-gray-100'
+                  : 'bg-gray-800 text-gray-300 hover:bg-gray-100'
               }`}
             >
               Contacted
@@ -222,7 +222,7 @@ export default function AdminInquiriesPage() {
               className={`px-4 py-2 rounded-lg font-medium transition ${
                 statusFilter === 'closed'
                   ? 'bg-blue-600 text-white'
-                  : 'bg-white text-gray-700 hover:bg-gray-100'
+                  : 'bg-gray-800 text-gray-300 hover:bg-gray-100'
               }`}
             >
               Closed
@@ -231,10 +231,10 @@ export default function AdminInquiriesPage() {
         </div>
 
         {/* Inquiries Table */}
-        <div className="bg-white rounded-lg shadow overflow-hidden">
+        <div className="bg-gray-800 rounded-lg shadow overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full">
-              <thead className="bg-gray-50 border-b border-gray-200">
+              <thead className="bg-gray-950 border-b border-gray-700">
                 <tr>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Date
@@ -256,7 +256,7 @@ export default function AdminInquiriesPage() {
                   </th>
                 </tr>
               </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
+              <tbody className="bg-gray-800 divide-y divide-gray-200">
                 {filteredInquiries.length === 0 ? (
                   <tr>
                     <td colSpan={6} className="px-6 py-8 text-center text-gray-500">
@@ -265,15 +265,15 @@ export default function AdminInquiriesPage() {
                   </tr>
                 ) : (
                   filteredInquiries.map((inquiry) => (
-                    <tr key={inquiry.id} className="hover:bg-gray-50">
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                    <tr key={inquiry.id} className="hover:bg-gray-950">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-white">
                         {formatDate(inquiry.created_at)}
                       </td>
                       <td className="px-6 py-4 text-sm">
-                        <div className="font-medium text-gray-900">{inquiry.name}</div>
-                        <div className="text-gray-600">{inquiry.email}</div>
+                        <div className="font-medium text-white">{inquiry.name}</div>
+                        <div className="text-gray-400">{inquiry.email}</div>
                         {inquiry.phone && (
-                          <div className="text-gray-600">{inquiry.phone}</div>
+                          <div className="text-gray-400">{inquiry.phone}</div>
                         )}
                       </td>
                       <td className="px-6 py-4 text-sm">
@@ -284,7 +284,7 @@ export default function AdminInquiriesPage() {
                           View Property →
                         </Link>
                       </td>
-                      <td className="px-6 py-4 text-sm text-gray-700 max-w-xs">
+                      <td className="px-6 py-4 text-sm text-gray-300 max-w-xs">
                         <div className="line-clamp-2">{inquiry.message}</div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
@@ -296,7 +296,7 @@ export default function AdminInquiriesPage() {
                         <select
                           value={inquiry.status}
                           onChange={(e) => updateStatus(inquiry.id, e.target.value as any)}
-                          className="border border-gray-300 rounded px-2 py-1 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          className="border border-gray-600 rounded px-2 py-1 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                         >
                           <option value="new">New</option>
                           <option value="contacted">Contacted</option>
