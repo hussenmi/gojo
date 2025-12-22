@@ -195,8 +195,8 @@ export default function ManagePropertiesPage() {
         <div className="container mx-auto px-4 py-8">
           <div className="mb-6 flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-bold text-white">Manage Properties</h1>
-              <p className="text-gray-400 mt-1">
+              <h1 className="text-4xl font-bold text-white mb-2">Property Management</h1>
+              <p className="text-gray-400">
                 {filteredAndSortedProperties.length} {filteredAndSortedProperties.length === 1 ? 'property' : 'properties'}
                 {searchTerm || statusFilter !== 'all' || propertyTypeFilter !== 'all' || listingTypeFilter !== 'all' || cityFilter !== 'all'
                   ? ` (filtered from ${properties.length} total)`

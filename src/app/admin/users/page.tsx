@@ -126,9 +126,9 @@ export default function AdminUsersPage() {
               </div>
               <Link
                 href="/admin"
-                className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition font-semibold"
+                className="px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition font-medium"
               >
-                Back to Dashboard
+                ← Back
               </Link>
             </div>
 

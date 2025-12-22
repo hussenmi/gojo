@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
+import Link from 'next/link';
 import { ProtectedRoute } from '@/components/auth/ProtectedRoute';
 import { AdminNav } from '@/components/admin/AdminNav';
 import { supabase } from '@/lib/supabase';
@@ -161,9 +162,17 @@ export default function EditPropertyPage() {
         <AdminNav />
 
         <div className="container mx-auto px-4 py-8 max-w-4xl">
-          <div className="mb-6">
-            <h1 className="text-3xl font-bold text-white">Edit Property</h1>
-            <p className="text-gray-400 mt-1">Update property listing details</p>
+          <div className="mb-8 flex items-center justify-between">
+            <div>
+              <h1 className="text-4xl font-bold text-white mb-2">Edit Property</h1>
+              <p className="text-gray-400">Update property listing details</p>
+            </div>
+            <Link
+              href="/admin/properties"
+              className="px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition font-medium"
+            >
+              ← Back
+            </Link>
           </div>
 
           <form onSubmit={handleSubmit} className="bg-gray-800 rounded-lg shadow p-6 space-y-6">

@@ -150,28 +150,54 @@ export default function AdminDashboard() {
             <h2 className="text-xl font-bold text-white mb-4">Quick Actions</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               <Link
-                href="/admin/properties/new"
-                className="flex items-center p-4 border-2 border-dashed border-gray-600 rounded-lg hover:border-blue-500 hover:bg-gray-700 transition group"
-              >
-                <div className="text-3xl mr-4">➕</div>
-                <div>
-                  <div className="font-semibold text-white group-hover:text-blue-400">
-                    Add New Property
-                  </div>
-                  <div className="text-sm text-gray-400">Create a new listing</div>
-                </div>
-              </Link>
-
-              <Link
                 href="/admin/properties"
                 className="flex items-center p-4 border-2 border-dashed border-gray-600 rounded-lg hover:border-blue-500 hover:bg-gray-700 transition group"
               >
                 <div className="text-3xl mr-4">📋</div>
                 <div>
                   <div className="font-semibold text-white group-hover:text-blue-400">
-                    Manage Properties
+                    Property Management
                   </div>
-                  <div className="text-sm text-gray-400">Edit or delete listings</div>
+                  <div className="text-sm text-gray-400">Manage all listings</div>
+                </div>
+              </Link>
+
+              <Link
+                href="/admin/analytics"
+                className="flex items-center p-4 border-2 border-dashed border-gray-600 rounded-lg hover:border-blue-500 hover:bg-gray-700 transition group"
+              >
+                <div className="text-3xl mr-4">📊</div>
+                <div>
+                  <div className="font-semibold text-white group-hover:text-blue-400">
+                    Property Analytics
+                  </div>
+                  <div className="text-sm text-gray-400">Views, inquiries & more</div>
+                </div>
+              </Link>
+
+              <Link
+                href="/admin/users"
+                className="flex items-center p-4 border-2 border-dashed border-gray-600 rounded-lg hover:border-blue-500 hover:bg-gray-700 transition group"
+              >
+                <div className="text-3xl mr-4">👥</div>
+                <div>
+                  <div className="font-semibold text-white group-hover:text-blue-400">
+                    User Management
+                  </div>
+                  <div className="text-sm text-gray-400">Manage users & subscriptions</div>
+                </div>
+              </Link>
+
+              <Link
+                href="/admin/user-analytics"
+                className="flex items-center p-4 border-2 border-dashed border-gray-600 rounded-lg hover:border-blue-500 hover:bg-gray-700 transition group"
+              >
+                <div className="text-3xl mr-4">📈</div>
+                <div>
+                  <div className="font-semibold text-white group-hover:text-blue-400">
+                    User Analytics
+                  </div>
+                  <div className="text-sm text-gray-400">User stats & activity</div>
                 </div>
               </Link>
 
@@ -198,45 +224,6 @@ export default function AdminDashboard() {
                     Viewing Schedules
                   </div>
                   <div className="text-sm text-gray-400">Manage appointments</div>
-                </div>
-              </Link>
-
-              <Link
-                href="/admin/analytics"
-                className="flex items-center p-4 border-2 border-dashed border-gray-600 rounded-lg hover:border-blue-500 hover:bg-gray-700 transition group"
-              >
-                <div className="text-3xl mr-4">📊</div>
-                <div>
-                  <div className="font-semibold text-white group-hover:text-blue-400">
-                    Property Analytics
-                  </div>
-                  <div className="text-sm text-gray-400">Views, inquiries & more</div>
-                </div>
-              </Link>
-
-              <Link
-                href="/admin/user-analytics"
-                className="flex items-center p-4 border-2 border-dashed border-gray-600 rounded-lg hover:border-blue-500 hover:bg-gray-700 transition group"
-              >
-                <div className="text-3xl mr-4">📈</div>
-                <div>
-                  <div className="font-semibold text-white group-hover:text-blue-400">
-                    User Analytics
-                  </div>
-                  <div className="text-sm text-gray-400">User stats & activity</div>
-                </div>
-              </Link>
-
-              <Link
-                href="/admin/users"
-                className="flex items-center p-4 border-2 border-dashed border-gray-600 rounded-lg hover:border-blue-500 hover:bg-gray-700 transition group"
-              >
-                <div className="text-3xl mr-4">👥</div>
-                <div>
-                  <div className="font-semibold text-white group-hover:text-blue-400">
-                    User Management
-                  </div>
-                  <div className="text-sm text-gray-400">Manage subscriptions</div>
                 </div>
               </Link>
 
